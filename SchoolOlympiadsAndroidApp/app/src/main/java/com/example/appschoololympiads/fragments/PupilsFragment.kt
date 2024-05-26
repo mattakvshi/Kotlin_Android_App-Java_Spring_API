@@ -167,7 +167,7 @@ class PupilsFragment : Fragment() {
 //    private fun deletePupil(){
 //        AlertDialog.Builder(requireContext())
 //            .setTitle("Удаление")
-//            .setMessage("Вы действительно хотите школьника ${viewModel.pupil?.pupilsName ?: ""}?")
+//            .setMessage("Вы действительно хотите удалить школьника ${viewModel.pupil?.pupilsName ?: ""}?")
 //            .setPositiveButton("Да") { _, _ ->
 //                viewModel.deletePupil()
 //            }
@@ -181,7 +181,7 @@ class PupilsFragment : Fragment() {
     private fun deletePupil() {
         val alertDialog = AlertDialog.Builder(requireContext(), R.style.MyAlertDialogStyle)
             .setTitle("Удаление")
-            .setMessage("Вы действительно хотите школьника ${viewModel.pupil?.pupilsName ?: ""}?")
+            .setMessage("Вы действительно хотите удалить школьника ${viewModel.pupil?.pupilsName ?: ""}?")
             .setPositiveButton("Да", null)
             .setNegativeButton("Нет", null)
             .setCancelable(true)
