@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/white</item> <!-- цвет фона -->
+        <item name="android:textColor">@color/black</item> <!-- цвет текста -->
+    </style>
+    <!-- Стиль для элементов меню -->
+    <style name="MyMenuItemStyle" parent="TextAppearance.AppCompat.Menu">
+        <!-- Цвет фона -->
+        <item name="android:background">@color/white</item>
+        <!-- Цвет текста -->
+        <item name="android:textColor">@color/black</item>
+    </style>
+</resources>
