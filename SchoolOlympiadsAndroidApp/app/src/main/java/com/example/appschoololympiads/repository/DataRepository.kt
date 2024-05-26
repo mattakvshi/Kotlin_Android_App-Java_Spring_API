@@ -160,7 +160,7 @@ class DataRepository private constructor() {
             }
 
             override fun onFailure(p0: Call<PupilPostResult>, p1: Throwable) {
-                Log.d(TAG_SERVER, "Ошибка запроса с кодом=${action}, для олимпиады=${pupil.pupilsName}")
+                Log.d(TAG_SERVER, "Ошибка запроса с кодом=${action}, для школьника=${pupil.pupilsName}")
             }
 
         })
