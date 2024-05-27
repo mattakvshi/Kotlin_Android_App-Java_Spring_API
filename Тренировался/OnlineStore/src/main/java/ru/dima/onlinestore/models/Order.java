@@ -55,6 +55,12 @@ public class Order {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name = "pay_method")
+    private int payMethod;
+
+    @Column(name = "product_count")
+    private int count;
+
     //@ManyToOne
     //@JoinColumn(name="department_id", referencedColumnName="id", insertable = false, updatable = false)
     //private Department department;

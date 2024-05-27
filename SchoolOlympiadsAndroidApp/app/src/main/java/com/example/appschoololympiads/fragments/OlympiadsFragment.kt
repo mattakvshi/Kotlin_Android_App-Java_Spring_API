@@ -26,6 +26,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 // Данный класс часть паттерна (View) MVVM и является фрагментом, управляющим отображением списка олимпиад.
 class OlympiadsFragment : Fragment(), MainActivity.Edit {
 
+    // Здесь мы определяем компаньон-объект (такой объект есть только один на весь класс) и метод `getInstance()`,
+    // который возвращает одиночный экземпляр класса `OlympiadsFragment` (или если его нет - создает).
     // Singleton pattern гарантирует создание только одного экземпляра объекта OlympiadFragment во всех случаях использования.
     companion object {
         private var INSTANCE: OlympiadsFragment? = null
@@ -37,9 +39,14 @@ class OlympiadsFragment : Fragment(), MainActivity.Edit {
     }
 
     // Объявляем переменные, используемые в классе.
+
+    // `viewModel` содержит бизнес-логику этого экрана и обновляется при изменении данных
     private lateinit var viewModel: OlympiadsViewModel
     private lateinit var _binding: FragmentOlympiadsBinding
+    // а `tabPosition` используется для сохранения текущей позиции вкладки.
     private var tabPosition: Int = 0
+
+    // Здесь инициализируются переменные. `_binding` и `binding` используются для работы с пользовательским интерфейсом этого фрагмента
     val binding get() = _binding
 
     // Функция onCreateView() вызывается для создания макета фрагмента.
@@ -62,21 +69,29 @@ class OlympiadsFragment : Fragment(), MainActivity.Edit {
         }
         viewModel.olympiadList.observe(viewLifecycleOwner) {
             createUI(it)
-            Log.d("fff", viewModel.olympiadList.value!!.size.toString())
+            //Log.d("fff", viewModel.olympiadList.value!!.size.toString())
         }
     }
 
+    // Внутренний класс `OlympiadPageAdapter` исключительно для управления отображением списка олимпиад на вьюпейджере.
+    // Он наследуется от `FragmentStateAdapter`, создает фрагмент для каждой олимпиады в списке и управляет его жизненным циклом.
     private inner class OlympiadPageAdapter(fa: FragmentActivity, private val olympiadList: List<Olympiad>?): FragmentStateAdapter(fa) {
+        // Метод просто возвращает количество элементов в списке олимпиад.
         override fun getItemCount(): Int {
             return (olympiadList?.size ?: 0)
         }
 
+        // Метод вызывается для каждого элемента на странице вьюпейджера, чтобы создать фрагмент, который будет отображать данные.
+        // Возвращается новый экземпляр фрагмента PupilsFragment с данными определенной олимпиады.
         override fun createFragment(position: Int): Fragment {
             return PupilsFragment.newInstance(olympiadList!![position])
         }
     }
 
+
+    // Метод используется для создания пользовательского интерфейса для фрагмента на основе данных, полученных из списка олимпиад.
     private fun createUI(olympiadList: List<Olympiad>) {
+        // Очищаем все вкладки и устанавливаем новые табы для каждой олимпиады из списка.
         binding.tlOlympiad.clearOnTabSelectedListeners()
         binding.tlOlympiad.removeAllTabs()
 
@@ -86,6 +101,7 @@ class OlympiadsFragment : Fragment(), MainActivity.Edit {
             })
         }
 
+        // Создаем и устанавливаем адаптер с помощью которого ViewPager будет знать, какие фрагменты отображать для каждой вкладки.
         val adapter = OlympiadPageAdapter(requireActivity(), viewModel.olympiadList.value)
         binding.vpPupils.adapter = adapter
         TabLayoutMediator(binding.tlOlympiad, binding.vpPupils, true, true) {
