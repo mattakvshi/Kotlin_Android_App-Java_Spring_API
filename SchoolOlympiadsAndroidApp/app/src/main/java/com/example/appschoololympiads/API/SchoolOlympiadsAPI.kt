@@ -16,7 +16,7 @@ interface SchoolOlympiadsAPI {
     // @Headers определяет HTTP заголовки, которые должны быть включены в запрос.
     @Headers("Content-Type: application/json")
     @POST("olympiads")
-    fun postOlympiad(@Body postOlympiad: OlympiadPost): Call<OlympiadPostResult>
+    fun postOlympiad(@Body postOlympiad: OlympiadPost): Call<PostResult>
 
     // эндпоинт для получения списка школьников
     @GET("pupils")
@@ -25,5 +25,5 @@ interface SchoolOlympiadsAPI {
     // эндпоинт для отправки информации о учащихся
     @Headers("Content-Type: application/json")
     @POST("pupils")
-    fun postPupils(@Body postPupil: PupilPost): Call<PupilPostResult>
+    fun postPupils(@Body postPupil: PupilPost): Call<PostResult>
 }

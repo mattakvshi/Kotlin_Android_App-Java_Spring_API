@@ -16,9 +16,14 @@ import com.example.appschoololympiads.databinding.FragmentPupilEditBinding
 import com.example.appschoololympiads.model.Pupil
 import java.text.SimpleDateFormat
 
+
+// PupilEditFragment - этот фрагмент предоставляет форму для редактирования или добавления школьника
 class PupilEditFragment : Fragment() {
 
+    // Поле для хранения информации о ученике
     private var pupil: Pupil? = null
+
+    // Массивы для выпадающих списков (Spinner).
     private lateinit var gradeArray: Array<String>
     private lateinit var markArray: Array<String>
 
@@ -57,6 +62,7 @@ class PupilEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Если есть школьник, информацию о котором нужно открыть - помещаем его в ViewModel и заполняем форму его данными
         viewModel.pupil = this.pupil
         if (viewModel.pupil != null)
             pullForm()
@@ -66,6 +72,8 @@ class PupilEditFragment : Fragment() {
             val customDate = dateFormat.parse("${year}-${month}-${dayOfMonth}")
             viewModel.date = customDate!!.time
         }
+
+        // обработчики событий для кнопок "Сохранить" и "Отмена"
 
         binding.btnSave.setOnClickListener {
             if (viewModel.pupil == null){
@@ -102,6 +110,7 @@ class PupilEditFragment : Fragment() {
 
     }
 
+    // Заполнение формы данными ученика из ViewModel
     private fun pullForm() {
         binding.etFIO.setText(viewModel.pupil!!.pupilsName)
         binding.etRegion.setText(viewModel.pupil!!.pupilsRegion)

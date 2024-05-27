@@ -12,8 +12,10 @@ import com.example.appschoololympiads.databinding.FragmentDetailPupilBinding
 import com.example.appschoololympiads.model.Pupil
 import java.util.Date
 
+// DetailPupilFragment - этот фрагмент отображает информацию о школьнике только для чтения (Детали)
 class DetailPupilFragment : Fragment() {
 
+    // информация о текущем ученике
     private lateinit var pupil: Pupil
 
     companion object {
@@ -22,10 +24,15 @@ class DetailPupilFragment : Fragment() {
         }
     }
 
+    // ViewModel для этого фрагмента
     private lateinit var viewModel: DetailPupilViewModel
-    private lateinit var _binding: FragmentDetailPupilBinding
+    // Определение привязки для этого фрагмента
+    private lateinit var _binding: FragmentDetailPupilBinding // Наверно это грубо но мне нравится представлять,
+    // что процесс биндинга похож на DOM обьект в вебе, такое же объектное представление древовидной структуры пользовательского интерфейса
     val binding get() = _binding
 
+
+    // А методы жизненного цикла похожи на Хуки в React или Vue
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,9 +45,11 @@ class DetailPupilFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Инициализация ViewModel
         viewModel = ViewModelProvider(this).get(DetailPupilViewModel::class.java)
         viewModel.pupil = this.pupil
 
+        // Привязка данных ученика к View
         binding.tvOlympiad.text = viewModel.olympiad.value!!.olympiadName
         binding.tvNamePupil.text = viewModel.pupil.pupilsName
         binding.tvRegion.text = viewModel.pupil.pupilsRegion

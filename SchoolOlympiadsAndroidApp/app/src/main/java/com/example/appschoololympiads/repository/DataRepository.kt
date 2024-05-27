@@ -5,10 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.example.appschoololympiads.API.OlympiadPost
-import com.example.appschoololympiads.API.OlympiadPostResult
 import com.example.appschoololympiads.API.OlympiadResponse
+import com.example.appschoololympiads.API.PostResult
 import com.example.appschoololympiads.API.PupilPost
-import com.example.appschoololympiads.API.PupilPostResult
 import com.example.appschoololympiads.API.PupilsResponse
 import com.example.appschoololympiads.API.SchoolOlympiadsAPI
 import com.example.appschoololympiads.API.ServerConnection
@@ -137,13 +136,13 @@ class DataRepository private constructor() {
     private fun postOlympiad(action: Int, olympiad: Olympiad) {
         //Отправляем данные об олимпиадах и actions на сервер и обрабатываем ответ от сервера
 
-        schoolAPI.postOlympiad(OlympiadPost(action, olympiad)).enqueue(object : Callback<OlympiadPostResult>{
-            override fun onResponse(p0: Call<OlympiadPostResult>, p1: Response<OlympiadPostResult>) {
+        schoolAPI.postOlympiad(OlympiadPost(action, olympiad)).enqueue(object : Callback<PostResult>{
+            override fun onResponse(p0: Call<PostResult>, p1: Response<PostResult>) {
                 Log.d(TAG_SERVER, "Запрос с олимпиадой = ${olympiad.olympiadName}, отправлен с кодом=${action}}")
                 fetchSchoolAPI()
             }
 
-            override fun onFailure(p0: Call<OlympiadPostResult>, p1: Throwable) {
+            override fun onFailure(p0: Call<PostResult>, p1: Throwable) {
                 Log.d(TAG_SERVER, "Ошибка запроса с кодом=${action}, для олимпиады=${olympiad.olympiadName}")
             }
 
@@ -153,13 +152,13 @@ class DataRepository private constructor() {
     private fun postPupil(action: Int, pupil: Pupil) {
         //Отправляем данные об школьниках и actions на сервер и обрабатываем ответ от сервера
 
-        schoolAPI.postPupils(PupilPost(action, pupil)).enqueue(object : Callback<PupilPostResult>{
-            override fun onResponse(p0: Call<PupilPostResult>, p1: Response<PupilPostResult>) {
+        schoolAPI.postPupils(PupilPost(action, pupil)).enqueue(object : Callback<PostResult>{
+            override fun onResponse(p0: Call<PostResult>, p1: Response<PostResult>) {
                 Log.d(TAG_SERVER, "Запрос с щкольником = ${pupil.pupilsName}, отправлен с кодом=${action}}")
                 fetchSchoolAPI()
             }
 
-            override fun onFailure(p0: Call<PupilPostResult>, p1: Throwable) {
+            override fun onFailure(p0: Call<PostResult>, p1: Throwable) {
                 Log.d(TAG_SERVER, "Ошибка запроса с кодом=${action}, для школьника=${pupil.pupilsName}")
             }
 
