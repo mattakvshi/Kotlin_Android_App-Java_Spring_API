@@ -113,6 +113,8 @@ class PupilEditFragment : Fragment() {
         binding.spMark.setSelection(viewModel.pupil!!.pupilsMark)
     }
 
+
+    // Когда фрагмент прикрепляется к Activity, мы инициализируем ViewModel, чтобы в ней были данные, относящиеся к UI (Шапку меняем)
     override fun onAttach(context: Context) {
         viewModel = ViewModelProvider(this).get(PupilEditViewModel::class.java)
         (requireContext() as ActivityInterface).updateTitle("Олимпиада ${viewModel.olympiad!!.olympiadName}")

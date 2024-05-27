@@ -23,6 +23,9 @@ import com.example.appschoololympiads.databinding.FragmentPupilsBinding
 import com.example.appschoololympiads.model.Olympiad
 import com.example.appschoololympiads.model.Pupil
 
+
+// Фрагмент PupilsFragment отображает список участников конкретной олимпиады
+// Он использует RecyclerView для отображения списка. ViewModel (PupilsViewModel) хранит данные, которые нужны UI
 class PupilsFragment : Fragment() {
 
     private lateinit var olympiad: Olympiad
@@ -44,6 +47,8 @@ class PupilsFragment : Fragment() {
     private lateinit var _binding: FragmentPupilsBinding
     val binding get() = _binding
 
+
+    // Метод жизненного цикла фрагмента (создает представление фрагмента и инициализирует привязку данных)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,26 +60,34 @@ class PupilsFragment : Fragment() {
         return binding.root
     }
 
+    // Метод жизненного цикла фрагмента (вызывается, когда представление фрагмента создано)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Прослушиваем изменения списка участников и обновляем адаптер RecyclerView
         viewModel.set_Olympiad(olympiad)
         viewModel.pupilList.observe(viewLifecycleOwner) {
             binding.rvPupils.adapter = PupilAdapter(it)
         }
 
+        // Устанавливаем обработчик кликов на кнопку добавления школьника
         binding.fabAdd.setOnClickListener {
             (requireContext() as ActivityInterface).setFragment(MainActivity.pupilEdit, null)
         }
     }
 
+    // Метод жизненного цикла фрагмента, вызывается при возвращении к фрагменту
     override fun onResume() {
         super.onResume()
 
+        // Обновляем адаптер RecyclerView с новыми данными
         binding.rvPupils.adapter = PupilAdapter(viewModel.pupilList.value ?: listOf())
     }
 
+    // Внутренний класс создан для управления элементами списка в RecyclerView
     private inner class PupilAdapter(private val items: List<Pupil>): RecyclerView.Adapter<PupilAdapter.ItemHolder>() {
+
+        // Создаем новый элемент списка (новый ViewHolder)
         override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int
@@ -83,8 +96,10 @@ class PupilsFragment : Fragment() {
             return ItemHolder(view)
         }
 
+        // Возвращаем количество элементов в списке
         override fun getItemCount(): Int = items.size
 
+        // Заполняем элемент списка данными
         override fun onBindViewHolder(holder: PupilAdapter.ItemHolder, position: Int) {
             holder.bind(viewModel.pupilList.value!![position])
         }
@@ -100,7 +115,10 @@ class PupilsFragment : Fragment() {
             lastView = view
         }
 
+        // содержит представление отдельного элемента списка и обрабатывает события, связанные с этим элементом.
         private inner class ItemHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+
+            // Здесь инициализируются виджеты отдельного элемента списка
             private var clItem = itemView.findViewById<ConstraintLayout>(R.id.clItem)
             private var tvName = itemView.findViewById<TextView>(R.id.tvName)
             private var tvAddress = itemView.findViewById<TextView>(R.id.tvAddress)
@@ -110,6 +128,7 @@ class PupilsFragment : Fragment() {
             private var ibEdit = itemView.findViewById<ImageButton>(R.id.ibEdit)
             private var ibDelete = itemView.findViewById<ImageButton>(R.id.ibDelete)
 
+            // Биндим данные участника с представлением элемента списка
             fun bind(pupil: Pupil) {
                 if (pupil == viewModel.pupil)
                     updateCurrentView(itemView)
@@ -201,9 +220,10 @@ class PupilsFragment : Fragment() {
             negativeButton.setTextColor(buttonColor)
         }
 
-        alertDialog.show()
+        alertDialog.show() // Диалоговое окно подтверждения удаления участника
     }
 
+    // Когда фрагмент прикрепляется к Activity, мы инициализируем ViewModel, чтобы в ней были данные, относящиеся к UI
     override fun onAttach(context: Context) {
         viewModel = ViewModelProvider(this).get(PupilsViewModel::class.java)
         super.onAttach(context)
