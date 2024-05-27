@@ -28,7 +28,7 @@ const val APPEND = 11
 const val UPDATE = 12
 const val DELETE = 13
 
-const val TAG_SERVER = "SERVER"
+const val TAG_SERVER = "SERVER_LOGS"
 
 //У нас есть private constructor для имплементации шаблона Singleton, это означает,
 // что мы можем создать только один экземпляр этого класса во всем приложении.

@@ -179,7 +179,11 @@ class OlympiadsFragment : Fragment(), MainActivity.Edit {
                 if (inputName.text.isNotBlank()) {
                     viewModel.appendOlympiad(inputName.text.toString())
                     alertDialog.dismiss() // закрыть диалог
+                } else {
+                    inputName.error = "Поле не должно быть пустым"
+                    inputName.requestFocus()
                 }
+
             }
             val buttonColor = ContextCompat.getColor(requireContext(), R.color.accent)
             alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(buttonColor)
@@ -230,6 +234,9 @@ class OlympiadsFragment : Fragment(), MainActivity.Edit {
                     olympiad.olympiadName = inputName.text.toString()
                     viewModel.updateOlympiad(olympiad)
                     alertDialog.dismiss() // закрыть диалог
+                } else {
+                    inputName.error = "Поле не должно быть пустым"
+                    inputName.requestFocus()
                 }
             }
             val buttonColor = ContextCompat.getColor(requireContext(), R.color.accent)

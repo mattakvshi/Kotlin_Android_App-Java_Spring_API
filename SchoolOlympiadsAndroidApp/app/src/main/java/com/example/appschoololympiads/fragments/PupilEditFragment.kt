@@ -9,12 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.appschoololympiads.ActivityInterface
 import com.example.appschoololympiads.R
 import com.example.appschoololympiads.databinding.FragmentPupilEditBinding
 import com.example.appschoololympiads.model.Pupil
 import java.text.SimpleDateFormat
+import java.util.regex.Pattern
 
 
 // PupilEditFragment - этот фрагмент предоставляет форму для редактирования или добавления школьника
@@ -76,6 +78,25 @@ class PupilEditFragment : Fragment() {
         // обработчики событий для кнопок "Сохранить" и "Отмена"
 
         binding.btnSave.setOnClickListener {
+
+            // проверка полей на пустоту
+            if (
+                    binding.etFIO.text.toString().isEmpty() ||
+                    binding.etRegion.text.toString().isEmpty() ||
+                    binding.etPhone.text.toString().isEmpty() ||
+                    binding.etSubject.text.toString().isEmpty() ||
+                    binding.etScore.text.toString().isEmpty()
+                ) {
+                Toast.makeText(requireContext(), "Пожалуйста, заполните все поля", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            if(!validatePhoneNumber()) {  // Если введенный номер телефона не валиден
+                binding.etPhone.error = "Неверный формат номера телефона"
+                binding.etPhone.requestFocus()
+                return@setOnClickListener
+            }
+
             if (viewModel.pupil == null){
                 viewModel.appendPupil(
                     binding.etFIO.text.toString(),
@@ -108,6 +129,14 @@ class PupilEditFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
+    }
+
+    // метод для проверки валидности номера телефона.
+    private fun validatePhoneNumber(): Boolean {
+        val phoneNumber = binding.etPhone.text.toString()
+        // шаблон регулярного выражения определяет формат номера телефона
+        val pattern = Pattern.compile("^(\\+7|8)?[-.\\s]?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{2}[-.\\s]?\\d{2}$")
+        return pattern.matcher(phoneNumber).matches()
     }
 
     // Заполнение формы данными ученика из ViewModel
