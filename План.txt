@@ -23,3 +23,6 @@
 6) ВИЗУАЛ
 ПЕРВЫМ ДЕЛОМ ViewModel потом Fragments
 и так для каждого фрагмента
+
+Патерны которые тут используем, это основной архитектурный - MVVM (Model-View-ViewModel)
+ну и все фрагменты и VM это Singleton как понимаю через getInstance в companion object 
